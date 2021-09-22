@@ -18,7 +18,13 @@ module.exports = {
         onDelete: "cascade"
       },
       RecipeId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Recipes",
+          id: "id"
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade"
       },
       createdAt: {
         allowNull: false,
