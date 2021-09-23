@@ -16,13 +16,16 @@ async function authN(req, res, next) {
         }
         next()
       } else {
-        res.status(401).json({ message: "Invalid Token"})
+        throw({ name: "InvalidToken"})
+        // res.status(401).json({ message: "Invalid Token"})
       }
     } catch (error) {
-      res.status(500).json({ message: "Internal Server Error"})
+      next(error)
+      // res.status(500).json({ message: "Internal Server Error"})
     }
   } else {
-    res.status(401).json({ message: "Invalid Token"})
+    throw({ name: "InvalidToken"})
+    // res.status(401).json({ message: "Invalid Token"})
   }
 }
 
@@ -36,13 +39,16 @@ async function authZ(req, res, next) {
       if (userId === data.UserId) {
         next()
       } else {
-        res.status(403).json({ message: "Forbidden to Access"})
+        throw({ name: "Forbidden"})
+        // res.status(403).json({ message: "Forbidden to Access"})
       }
     } else {
-      res.status(404).json({ message: "Data Not Found"})
+      throw({ name: "NotFound"})
+      // res.status(404).json({ message: "Data Not Found"})
     }
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error"})
+    next(error)
+    // res.status(500).json({ message: "Internal Server Error"})
   }
 }
 
