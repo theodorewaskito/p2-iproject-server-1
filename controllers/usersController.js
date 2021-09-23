@@ -1,6 +1,7 @@
 const { User } = require('../models/index')
 const { decode } = require('../helpers/bcrypt')
 const { signToken, verifyToken } = require('../helpers/jwt')
+const nodemailer = require('nodemailer')
 
 class UserController {
 
@@ -8,6 +9,31 @@ class UserController {
     const { email, password, phoneNumber } = req.body
     try {
       const createdUser = await User.create({ email, password, phoneNumber })
+
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "h8-foodhub@outlook.com", //SARAN PAKAI EMAIL DARI OUTLOOK
+          pass: "h8foodhub"
+        }
+      })
+
+      const options = {
+        from: "h8-foodhub@outlook.com",
+        to: email,
+        subject: "Selamat datang di FoodHub",
+        text: "Terima kasih sudah bergabung di FoodHub"
+      }    
+      
+      transporter.sendMail(options, function(err, info) { 
+        if(err) {
+          console.log(err);
+          return
+        }
+        console.log("Sent: ", info.response);
+      })
+      
+      //EMAIL MASUK KE SPAM
       res.status(201).json({ email: createdUser.email, role: createdUser.role })
     } catch(err) {
       // res.status(500).json({ message: "Internal Server Error" })
@@ -40,14 +66,6 @@ class UserController {
         throw ({ name: 'Unauthorized'})
       }
     } catch(err) {
-      // if(error.name === "SequelizeValidationError") {
-      //   const errors = error.errors.map( el => {
-      //     return el.message
-      //   })
-      //   res.status(400).json({ message: errors })
-      // } else {
-      //   res.status(500).json({ message: "Internal Server Error" })
-      // } 
       next(err)
     }
   }
