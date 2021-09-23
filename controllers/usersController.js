@@ -10,8 +10,8 @@ class UserController {
       const createdUser = await User.create({ email, password, phoneNumber })
       res.status(201).json({ email: createdUser.email, role: createdUser.role })
     } catch(err) {
-      res.status(500).json({ message: "Internal Server Error" })
-      // next(err)
+      // res.status(500).json({ message: "Internal Server Error" })
+      next(err)
     }
   }
 
@@ -32,23 +32,23 @@ class UserController {
           })
           res.status(200).json({ access_token })
         } else {
-          res.status(401).json({ message: "Wrong Email/Password"})
-          // throw ({ name: 'Unauthorized'})
+          // res.status(401).json({ message: "Wrong Email/Password"})
+          throw ({ name: 'Unauthorized'})
         }
       } else {
-        res.status(401).json({ message: "Wrong Email/Password"})
-        // throw ({ name: 'Unauthorized'})
+        // res.status(401).json({ message: "Wrong Email/Password"})
+        throw ({ name: 'Unauthorized'})
       }
     } catch(err) {
-      if(error.name === "SequelizeValidationError") {
-        const errors = error.errors.map( el => {
-          return el.message
-        })
-        res.status(400).json({ message: errors })
-      } else {
-        res.status(500).json({ message: "Internal Server Error" })
-      } 
-      // next(err)
+      // if(error.name === "SequelizeValidationError") {
+      //   const errors = error.errors.map( el => {
+      //     return el.message
+      //   })
+      //   res.status(400).json({ message: errors })
+      // } else {
+      //   res.status(500).json({ message: "Internal Server Error" })
+      // } 
+      next(err)
     }
   }
 
