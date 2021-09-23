@@ -15,10 +15,6 @@ class RecipeController {
     }
   }
 
-  static async getRecipe(req, res, next) {
-
-  }
-
 }
 
 module.exports = RecipeController

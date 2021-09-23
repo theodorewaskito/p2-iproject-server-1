@@ -17,14 +17,11 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade"
       },
-      RecipeId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Recipes",
-          id: "id"
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade"
+      recipeName: {
+        type: Sequelize.STRING
+      },
+      recipeImage: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
