@@ -13,13 +13,13 @@ class UserController {
       const transporter = nodemailer.createTransport({
         service: "hotmail",
         auth: {
-          user: "h8-foodhub@outlook.com", //SARAN PAKAI EMAIL DARI OUTLOOK
-          pass: "h8foodhub"
+          user: process.env.EMAIL_MAILER, //SARAN PAKAI EMAIL DARI OUTLOOK
+          pass: process.env.PASSWORD_MAILER
         }
       })
 
       const options = {
-        from: "h8-foodhub@outlook.com",
+        from: process.env.EMAIL_MAILER,
         to: email,
         subject: "Selamat datang di FoodHub",
         text: "Terima kasih sudah bergabung di FoodHub"
