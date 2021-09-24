@@ -34,7 +34,7 @@ class UserController {
       })
       
       //EMAIL MASUK KE SPAM
-      res.status(201).json({ email: createdUser.email, role: createdUser.role })
+      res.status(201).json({ email: createdUser.email })
     } catch(err) {
       // res.status(500).json({ message: "Internal Server Error" })
       next(err)

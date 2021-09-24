@@ -13,7 +13,6 @@ class FavouriteControl {
       })
       res.status(200).json(result)
     } catch (error) {
-      console.log(error);
       next(error)
     }
   }
@@ -30,8 +29,8 @@ class FavouriteControl {
       
       res.status(201).json(createFav)
     } catch (error) {
-      console.log(error);
-      // res.status(500).json(error)
+      // console.log(error);
+      next(error)
     }
   }
 
